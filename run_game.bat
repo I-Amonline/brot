@@ -1,1 +1,1 @@
-halite.exe -d "240 160" "Brot.py" "Brot.py"
+halite.exe -d "240 160" "BrotA1.py" "BrotM1.py"
