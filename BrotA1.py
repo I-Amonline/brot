@@ -17,7 +17,7 @@ import logging
 
 # GAME START
 # Here we define the bot's name as Brot and initialize the game, including communication with the Halite engine.
-game = hlt.Game("Brot")
+game = hlt.Game("BrotA1")
 # Then we print our start message to the logs
 logging.info("Starting my Brot bot!")
 
