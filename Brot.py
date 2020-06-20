@@ -1,5 +1,5 @@
 """
-Welcome to your first Halite-II bot!
+Welcome to your first Halite-II bot Brot!
 
 This bot's name is Brot. It's purpose is simple (don't expect it to win complex games :) ):
 1. Initialize game
