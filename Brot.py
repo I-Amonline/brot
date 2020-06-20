@@ -1,7 +1,7 @@
 """
 Welcome to your first Halite-II bot!
 
-This bot's name is Amon. It's purpose is simple (don't expect it to win complex games :) ):
+This bot's name is Brot. It's purpose is simple (don't expect it to win complex games :) ):
 1. Initialize game
 2. If a ship is not docked and there are unowned planets
 2.a. Try to Dock in the planet if close enough
@@ -16,10 +16,10 @@ import hlt
 import logging
 
 # GAME START
-# Here we define the bot's name as Amon and initialize the game, including communication with the Halite engine.
-game = hlt.Game("Amon")
+# Here we define the bot's name as Brot and initialize the game, including communication with the Halite engine.
+game = hlt.Game("Brot")
 # Then we print our start message to the logs
-logging.info("Starting my Amon bot!")
+logging.info("Starting my Brot bot!")
 
 while True:
     # TURN START
