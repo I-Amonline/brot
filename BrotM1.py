@@ -21,6 +21,8 @@ game = hlt.Game("BrotM1")
 # Then we print our start message to the logs
 logging.info("Starting my Brot bot!")
 
+goal_Planets= []
+
 while True:
     # TURN START
     # Update the map for the new turn and get the latest version
@@ -47,6 +49,9 @@ while True:
                 # We add the command by appending it to the command_queue
                 command_queue.append(ship.dock(planet))
             else:
+                if planet in goal_Planets:
+                    continue
+                
                 # If we can't dock, we move towards the closest empty point near this planet (by using closest_point_to)
                 # with constant speed. Don't worry about pathfinding for now, as the command will do it for you.
                 # We run this navigate command each turn until we arrive to get the latest move.
@@ -65,6 +70,7 @@ while True:
                 # don't fret though, we can run the command again the next turn)
                 if navigate_command:
                     command_queue.append(navigate_command)
+                    goal_Planets.append(planet) 
             break
 
     # Send our set of commands to the Halite engine for this turn
