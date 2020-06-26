@@ -32,7 +32,7 @@ while True:
                             ship.closest_point_to(target_planet),
                             game_map,
                             speed=int(hlt.constants.MAX_SPEED),
-                            ignore_ships=True)
+                            ignore_ships=False)
 
                 if navigate_command:
                     command_queue.append(navigate_command)
@@ -44,7 +44,7 @@ while True:
                         ship.closest_point_to(target_ship),
                         game_map,
                         speed=int(hlt.constants.MAX_SPEED),
-                        ignore_ships=True)
+                        ignore_ships=False)
 
             if navigate_command:
                 command_queue.append(navigate_command)
