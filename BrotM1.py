@@ -7,6 +7,7 @@ logging.info("Starting Apollyon")
 while True:
     game_map = game.update_map()
     command_queue = []
+    goal_planets=[]
     
     for ship in game_map.get_me().all_ships():
         shipid = ship.id
@@ -23,10 +24,12 @@ while True:
         closest_enemy_ships = [entities_by_distance[distance][0] for distance in entities_by_distance if isinstance(entities_by_distance[distance][0], hlt.entity.Ship) and entities_by_distance[distance][0] not in team_ships]
 
         # If there are any empty planets, let's try to mine!
-        if len(closest_empty_planets) > 0:
+        if (len(closest_empty_planets) > 0)and(closest_empty_planets[0] not in goal_planets):
             target_planet = closest_empty_planets[0]
+            goal_planets.append(target_planet)
             if ship.can_dock(target_planet):
                 command_queue.append(ship.dock(target_planet))
+                
             else:
                 navigate_command = ship.navigate(
                             ship.closest_point_to(target_planet),
