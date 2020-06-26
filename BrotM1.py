@@ -1,8 +1,8 @@
 import hlt
 import logging
 from collections import OrderedDict
-game = hlt.Game("SentdeBot-V1")
-logging.info("Starting SentdeBot")
+game = hlt.Game("Apollyon")
+logging.info("Starting Apollyon")
 
 while True:
     game_map = game.update_map()
