@@ -8,12 +8,17 @@ while True:
     game_map = game.update_map()
     command_queue = []
     goal_planets=[]
+
+    for planet in goal_planets:
+        if (plane.is_owned())and(planet.all_docked_ships in team_ships):
+            goal_planets.remove(planet)
     
     for ship in game_map.get_me().all_ships():
         shipid = ship.id
         if ship.docking_status != ship.DockingStatus.UNDOCKED:
             # Skip this ship
             continue
+    
 
         entities_by_distance = game_map.nearby_entities_by_distance(ship)
         entities_by_distance = OrderedDict(sorted(entities_by_distance.items(), key=lambda t: t[0]))
@@ -23,6 +28,10 @@ while True:
 
         team_ships = game_map.get_me().all_ships()
         closest_enemy_ships = [entities_by_distance[distance][0] for distance in entities_by_distance if isinstance(entities_by_distance[distance][0], hlt.entity.Ship) and entities_by_distance[distance][0] not in team_ships]
+
+       
+            
+        
 
         # If there are any empty planets, let's try to mine!
         if (len(closest_empty_planets) > 0)and(closest_empty_planets[0] not in goal_planets):
