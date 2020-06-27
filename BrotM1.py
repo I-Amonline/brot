@@ -62,7 +62,7 @@ while True:
 
                 if navigate_command:
                     command_queue.append(navigate_command)
-                    
+                    continue
             
         # FIND SHIP TO ATTACK!
         
