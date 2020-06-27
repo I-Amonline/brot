@@ -3,22 +3,24 @@ import logging
 from collections import OrderedDict
 game = hlt.Game("Apollyon")
 logging.info("Starting Apollyon")
-
+i = -1
 while True:
     game_map = game.update_map()
     command_queue = []
     goal_planets=[]
-
-    for planet in goal_planets:
-        if (plane.is_owned())and(planet.all_docked_ships in team_ships):
-            goal_planets.remove(planet)
+    i = i+1
+#    for planet in goal_planets:
+ #       if (plane.is_owned())and(planet.all_docked_ships in team_ships):
+  #          goal_planets.remove(planet)
+          
     
     for ship in game_map.get_me().all_ships():
         shipid = ship.id
         if ship.docking_status != ship.DockingStatus.UNDOCKED:
             # Skip this ship
             continue
-    
+        if i>80 :
+            goal_planets=[]
 
         entities_by_distance = game_map.nearby_entities_by_distance(ship)
         entities_by_distance = OrderedDict(sorted(entities_by_distance.items(), key=lambda t: t[0]))
@@ -52,7 +54,7 @@ while True:
 
         elif (len(closest_empty_planets) <1 ):
             for planet in closest_owned_planets:
-                if (planet.all_docked_ships in team_ships)and(len(planet.all_docked_ships)<3):
+                if (planet.all_docked_ships[0]not in team_ships )and(len(planet.all_docked_ships)< 3):
                     target_ship1 = planet.all_docked_ships[0]
                     navigate_command = ship.navigate(
                         ship.closest_point_to(target_ship1),
@@ -60,9 +62,9 @@ while True:
                         speed=int(hlt.constants.MAX_SPEED),
                         ignore_ships=False)
 
-                if navigate_command:
-                    command_queue.append(navigate_command)
-                    continue
+                    if navigate_command:
+                        command_queue.append(navigate_command)
+                        
             
         # FIND SHIP TO ATTACK!
         
