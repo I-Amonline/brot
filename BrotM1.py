@@ -51,8 +51,8 @@ while True:
                         speed=int(hlt.constants.MAX_SPEED),
                         ignore_ships=False)
 
-            if navigate_command:
-                command_queue.append(navigate_command)
+                if navigate_command:
+                    command_queue.append(navigate_command)
                     
             
         # FIND SHIP TO ATTACK!
