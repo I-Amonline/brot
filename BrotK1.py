@@ -27,12 +27,12 @@ while True:
         if len(closest_empty_planets) > 0:
             target_planet = closest_empty_planets[index]
             if ship.can_dock(target_planet) and target_planet not in goal_planet :
+                command_queue.append(ship.dock(target_planet))
                 goal_planet.append((target_planet))
-                index = index + 4
+                index = index + 1
                 ignore_ships=False
                 
-                command_queue.append(ship.dock(target_planet))
-                
+               
             elif ship.can_dock(target_planet) and target_planet not in goal_planet :
                 command_queue.append(ship.dock(target_planet))
                 goal_planet.append((target_planet))
@@ -53,7 +53,7 @@ while True:
                     command_queue.append(navigate_command)
 
         # FIND SHIP TO ATTACK!
-        elif len(closest_enemy_ships) > 0 and planet.all_docked_ships() >0 :
+        elif len(closest_enemy_ships) < 2 and planet.all_docked_ships() >2 :
             target_ship = closest_enemy_ships[0]
             navigate_command = ship.navigate(
                         ship.closest_point_to(target_ship),
