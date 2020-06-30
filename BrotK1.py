@@ -8,7 +8,7 @@ while True:
     game_map = game.update_map()
     command_queue = []
     goal_planet = []
-    
+   
     for ship in game_map.get_me().all_ships():
         shipid = ship.id
         if ship.docking_status != ship.DockingStatus.UNDOCKED:
@@ -26,18 +26,24 @@ while True:
         # If there are any empty planets, let's try to mine!
         if len(closest_empty_planets) > 0:
             target_planet = closest_empty_planets[index]
-            if ship.can_dock(target_planet) and target_planet not in goal_planet :
+            if ship.can_dock(target_planet) and target_planet not in goal_planet:
                 command_queue.append(ship.dock(target_planet))
                 goal_planet.append((target_planet))
-                index = index + 1
                 ignore_ships=False
+                index = index + 3
+                closest_enemy_ships = [entities_by_distance[distance][0] for distance in entities_by_distance if isinstance(entities_by_distance[distance][0], hlt.entity.Ship) and entities_by_distance[distance][0] not in team_ships]
+
+                
+                
                 
                
-            elif ship.can_dock(target_planet) and target_planet not in goal_planet :
+            elif ship.can_dock(target_planet) and target_planet not in goal_planet and target_planet.all_docked_ships () == 0 :
                 command_queue.append(ship.dock(target_planet))
                 goal_planet.append((target_planet))
                 ignore_ships=False
                 index = index + 1
+                closest_enemy_ships = [entities_by_distance[distance][0] for distance in entities_by_distance if isinstance(entities_by_distance[distance][0], hlt.entity.Ship) and entities_by_distance[distance][0] not in team_ships]
+
                 
                 
                 
@@ -53,13 +59,17 @@ while True:
                     command_queue.append(navigate_command)
 
         # FIND SHIP TO ATTACK!
-        elif len(closest_enemy_ships) < 2 and planet.all_docked_ships() >2 :
+
+            
+        elif len(closest_empty_planets) == 0 :
             target_ship = closest_enemy_ships[0]
             navigate_command = ship.navigate(
                         ship.closest_point_to(target_ship),
                         game_map,
                         speed=int(hlt.constants.MAX_SPEED),
                         ignore_ships=False)
+            closest_empty_planets = [entities_by_distance[distance][0] for distance in entities_by_distance if isinstance(entities_by_distance[distance][0], hlt.entity.Planet) and not entities_by_distance[distance][0].is_owned()]
+
 
             if navigate_command:
                 command_queue.append(navigate_command)
@@ -69,7 +79,10 @@ while True:
                             game_map,
                             speed=int(hlt.constants.MAX_SPEED),
                             ignore_ships=False)
+                closest_empty_planets = [entities_by_distance[distance][0] for distance in entities_by_distance if isinstance(entities_by_distance[distance][0], hlt.entity.Planet) and not entities_by_distance[distance][0].is_owned()]
+                closest_enemy_ships = [entities_by_distance[distance][0] for distance in entities_by_distance if isinstance(entities_by_distance[distance][0], hlt.entity.Ship) and entities_by_distance[distance][0] not in team_ships]
 
+                
 
     game.send_command_queue(command_queue)
     # TURN END
